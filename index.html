@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Calculator — Pritam Giri</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+
+<body>
+
+<a href="javascript:history.back()" class="back">← Portfolio</a>
+
+<div class="calc-wrapper">
+  <div class="calc-header">
+    <div>
+      <div class="calc-title">Calculator</div>
+      <div class="calc-subtitle">by Pritam Giri</div>
+    </div>
+  </div>
+
+  <div class="mode-tabs">
+    <button class="mode-tab active" onclick="setMode('simple')">Basic</button>
+    <button class="mode-tab" onclick="setMode('sci')">Scientific</button>
+    <button class="mode-tab" onclick="setMode('prog')">Programmer</button>
+  </div>
+
+  <div class="calc-body">
+
+    <div class="display" id="display">
+      <button class="history-toggle" onclick="toggleHistory()">⏱ History</button>
+      <span class="mem-indicator" id="memIndicator">M</span>
+      <div class="display-expr" id="expr"></div>
+      <div class="display-result" id="result">0</div>
+    </div>
+
+    <div class="history-panel" id="historyPanel">
+      <div class="history-empty" id="historyEmpty">No history yet</div>
+    </div>
+
+    <div class="prog-bases" id="progBases" style="display:none;">
+      <div class="base-row active-base" onclick="setBase('hex')">
+        <div class="base-label">HEX</div>
+        <div class="base-value" id="hexVal">0</div>
+      </div>
+      <div class="base-row" onclick="setBase('dec')">
+        <div class="base-label">DEC</div>
+        <div class="base-value" id="decVal">0</div>
+      </div>
+      <div class="base-row" onclick="setBase('bin')">
+        <div class="base-label">BIN</div>
+        <div class="base-value" id="binVal">0</div>
+      </div>
+    </div>
+
+    <!-- SIMPLE -->
+    <div class="keypad keypad-simple" id="keypadSimple">
+      <button class="key key-clear" onclick="clearAll()">AC</button>
+      <button class="key key-del" onclick="del()">⌫</button>
+      <button class="key key-op" onclick="appendOp('%')">%</button>
+      <button class="key key-op" onclick="appendOp('/')">÷</button>
+
+      <button class="key key-num" onclick="appendNum('7')">7</button>
+      <button class="key key-num" onclick="appendNum('8')">8</button>
+      <button class="key key-num" onclick="appendNum('9')">9</button>
+      <button class="key key-op" onclick="appendOp('*')">×</button>
+
+      <button class="key key-num" onclick="appendNum('4')">4</button>
+      <button class="key key-num" onclick="appendNum('5')">5</button>
+      <button class="key key-num" onclick="appendNum('6')">6</button>
+      <button class="key key-op" onclick="appendOp('-')">−</button>
+
+      <button class="key key-num" onclick="appendNum('1')">1</button>
+      <button class="key key-num" onclick="appendNum('2')">2</button>
+      <button class="key key-num" onclick="appendNum('3')">3</button>
+      <button class="key key-op" onclick="appendOp('+')">+</button>
+
+      <button class="key key-num" onclick="toggleSign()">+/−</button>
+      <button class="key key-num" onclick="appendNum('0')">0</button>
+      <button class="key key-num" onclick="appendDot()">.</button>
+      <button class="key key-eq" onclick="calculate()">=</button>
+    </div>
+
+  </div>
+   <!-- SCIENTIFIC -->
+    <div class="keypad keypad-sci" id="keypadSci" style="display:none;">
+      <!-- Row 1: mem -->
+      <button class="key key-mem"   onclick="memClear()">MC</button>
+      <button class="key key-mem"   onclick="memRecall()">MR</button>
+      <button class="key key-mem"   onclick="memAdd()">M+</button>
+      <button class="key key-mem"   onclick="memSub()">M−</button>
+      <button class="key key-mem"   onclick="memStore()">MS</button>
+
+      <!-- Row 2: fns -->
+      <button class="key key-fn"    onclick="applyFn('sin')">sin</button>
+      <button class="key key-fn"    onclick="applyFn('cos')">cos</button>
+      <button class="key key-fn"    onclick="applyFn('tan')">tan</button>
+      <button class="key key-fn"    onclick="applyFn('log')">log</button>
+      <button class="key key-fn"    onclick="applyFn('ln')">ln</button>
+
+      <!-- Row 3 -->
+      <button class="key key-fn"    onclick="applyFn('sqrt')">√</button>
+      <button class="key key-fn"    onclick="applyFn('sq')">x²</button>
+      <button class="key key-fn"    onclick="applyFn('inv')">1/x</button>
+      <button class="key key-fn"    onclick="appendOp('^')">xʸ</button>
+      <button class="key key-fn"    onclick="appendConst('pi')">π</button>
+
+      <!-- Row 4 -->
+      <button class="key key-fn"    onclick="appendConst('e')">e</button>
+      <button class="key key-fn"    onclick="appendOp('(')">( </button>
+      <button class="key key-fn"    onclick="appendOp(')')"> )</button>
+      <button class="key key-fn"    onclick="applyFn('abs')">|x|</button>
+      <button class="key key-fn"    onclick="applyFn('fact')">n!</button>
+
+      <!-- num rows -->
+      <button class="key key-clear" onclick="clearAll()">AC</button>
+      <button class="key key-del"   onclick="del()">⌫</button>
+      <button class="key key-op"    onclick="appendOp('%')">%</button>
+      <button class="key key-op"    onclick="appendOp('/')">÷</button>
+      <button class="key key-op"    onclick="appendOp('*')">×</button>
+
+      <button class="key key-num"   onclick="appendNum('7')">7</button>
+      <button class="key key-num"   onclick="appendNum('8')">8</button>
+      <button class="key key-num"   onclick="appendNum('9')">9</button>
+      <button class="key key-op"    onclick="appendOp('-')">−</button>
+      <button class="key key-op"    onclick="appendOp('+')">+</button>
+
+      <button class="key key-num"   onclick="appendNum('4')">4</button>
+      <button class="key key-num"   onclick="appendNum('5')">5</button>
+      <button class="key key-num"   onclick="appendNum('6')">6</button>
+      <button class="key key-num"   onclick="toggleSign()">+/−</button>
+      <button class="key key-num"   onclick="appendDot()">.</button>
+
+      <button class="key key-num"   onclick="appendNum('1')">1</button>
+      <button class="key key-num"   onclick="appendNum('2')">2</button>
+      <button class="key key-num"   onclick="appendNum('3')">3</button>
+      <button class="key key-num key-wide" onclick="appendNum('0')">0</button>
+
+      <button class="key key-eq key-wide" onclick="calculate()">=</button>
+    </div>
+    <!-- PROGRAMMER -->
+    <div class="keypad keypad-prog" id="keypadProg" style="display:none;">
+      <!-- hex digits A-F -->
+      <button class="key key-fn" id="hA" onclick="appendHex('A')">A</button>
+      <button class="key key-fn" id="hB" onclick="appendHex('B')">B</button>
+      <button class="key key-fn" id="hC" onclick="appendHex('C')">C</button>
+      <button class="key key-fn" id="hD" onclick="appendHex('D')">D</button>
+
+      <button class="key key-fn" id="hE" onclick="appendHex('E')">E</button>
+      <button class="key key-fn" id="hF" onclick="appendHex('F')">F</button>
+      <button class="key key-op" onclick="appendOp('<<')">SHL</button>
+      <button class="key key-op" onclick="appendOp('>>')">SHR</button>
+
+      <button class="key key-op" onclick="appendOp('&')">AND</button>
+      <button class="key key-op" onclick="appendOp('|')">OR</button>
+      <button class="key key-op" onclick="appendOp('^')">XOR</button>
+      <button class="key key-fn" onclick="applyFn('not')">NOT</button>
+
+      <!-- standard nums -->
+      <button class="key key-clear" onclick="clearAll()">AC</button>
+      <button class="key key-del"   onclick="del()">⌫</button>
+      <button class="key key-op"    onclick="appendOp('/')">÷</button>
+      <button class="key key-op"    onclick="appendOp('*')">×</button>
+
+      <button class="key key-num" id="p7" onclick="appendNum('7')">7</button>
+      <button class="key key-num" id="p8" onclick="appendNum('8')">8</button>
+      <button class="key key-num" id="p9" onclick="appendNum('9')">9</button>
+      <button class="key key-op"  onclick="appendOp('-')">−</button>
+
+      <button class="key key-num" id="p4" onclick="appendNum('4')">4</button>
+      <button class="key key-num" id="p5" onclick="appendNum('5')">5</button>
+      <button class="key key-num" id="p6" onclick="appendNum('6')">6</button>
+      <button class="key key-op"  onclick="appendOp('+')">+</button>
+
+      <button class="key key-num" id="p1" onclick="appendNum('1')">1</button>
+      <button class="key key-num" id="p2" onclick="appendNum('2')">2</button>
+      <button class="key key-num" id="p3" onclick="appendNum('3')">3</button>
+      <button class="key key-eq"  onclick="calculate()">=</button>
+
+      <button class="key key-num key-wide" id="p0" onclick="appendNum('0')">0</button>
+      <button class="key key-op"  onclick="appendOp('%')">MOD</button>
+      <button class="key key-op"  onclick="appendOp('~')">NEG</button>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
